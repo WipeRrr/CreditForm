@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,7 @@ import { RouterLink } from '@angular/router';
     FormsModule,
     PasswordModule,
     ButtonModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -24,7 +26,32 @@ export class LoginComponent {
     email: '',
     password: '',
   };
+
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private messageService = inject(MessageService);
   onLogin() {
-    console.log(this.login);
+    const { email, password } = this.login;
+    this.authService.getUserDetails(email, password).subscribe({
+      next: (response) => {
+        if (response.length >= 1) {
+          sessionStorage.setItem('email', email);
+          this.router.navigate(['credit-form']);
+        } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Wrong email or password',
+            });
+        }
+      },
+      error: () => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Something went wrong',
+          });
+      }
+    });
   }
 }

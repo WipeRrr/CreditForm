@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "id": "e4c3",
+      "fullName": "asdasd",
+      "email": "asdasdasd@asdasd",
+      "password": "asdfgh"
+    },
+    {
+      "id": "e742",
+      "fullName": "Vasia",
+      "email": "dfjkhgjkldjfhgkjdhfjkh@sd;lkfklsfjg",
+      "password": "zaqwsx"
+    },
+    {
+      "id": "113b",
+      "fullName": "Oleg",
+      "email": "oleg@gmail.com",
+      "password": "1234567w"
+    },
+    {
+      "id": "058f",
+      "fullName": "sdfgdfghdfgh",
+      "email": "fuckyou@gmail.com",
+      "password": "123456s"
+    },
+    {
+      "id": "34c4",
+      "fullName": "Tolik",
+      "email": "tolik@gmail.com",
+      "password": "123456789q"
+    }
+  ]
+}
