@@ -29,6 +29,12 @@
       "fullName": "Tolik",
       "email": "tolik@gmail.com",
       "password": "123456789q"
+    },
+    {
+      "id": "c0bd",
+      "fullName": "galina",
+      "email": "galina@gmail.com",
+      "password": "123456q"
     }
   ]
 }

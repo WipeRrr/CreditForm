@@ -1,3 +1,57 @@
+<div class="flex justify-content-center align-items-center min-h-screen">
+  <p-card header="Credit Form" [style]="{ width: '450px' }">
+    <form [formGroup]="creditForm" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label for="amount">Amount of credit</label>
+        <p-inputnumber
+          formControlName="amount"
+          inputId="amount"
+          mode="currency"
+          currency="USD"
+          locale="en-US"
+          class="w-full"
+          [showButtons]="true"
+          [min]="0"
+          [max]="1000000"
+        />
+      </div>
+      <div class="field">
+        <p-select
+          [options]="monthsList"
+          id="months"
+          formControlName="months"
+          [checkmark]="true"
+          optionLabel="name"
+          [showClear]="true"
+          placeholder="Select number of months"
+          class="w-full md:w-56"
+        />
+      </div>
 
+      <div class="field">
+        <!-- <label for="file">Upload Documents</label>
+        <p-fileUpload
+          formControlName="file"
+          name="file"
+          accept=".pdf, .jpg, .jpeg, .png"
+          [showUploadButton]="true"
+          (onSelect)="onFileSelect($event)"
+          class="w-full"
+          chooseLabel="Choose File"
+          uploadLabel="Upload"
+          cancelLabel="Cancel"
+          [auto]="true"
+          [multiple]="true"
+        ></p-fileUpload> -->
+      </div>
+      <p-button
+        type="submit"
+        label="Send a request"
+        styleClass="w-full"
+        [disabled]="creditForm.invalid"
+      ></p-button>
+    </form>
+  </p-card>
+</div>
 
-<p-button label="Signt Out" (onClick)="logout()" class="logout_btn"></p-button >
+<p-button label="Signt Out" (onClick)="logout()" class="logout_btn"></p-button>
