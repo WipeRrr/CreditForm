@@ -29,9 +29,8 @@
       </div>
 
       <div class="field">
-        <!-- <label for="file">Upload Documents</label>
+        <label for="file">Upload Documents</label>
         <p-fileUpload
-          formControlName="file"
           name="file"
           accept=".pdf, .jpg, .jpeg, .png"
           [showUploadButton]="true"
@@ -42,7 +41,8 @@
           cancelLabel="Cancel"
           [auto]="true"
           [multiple]="true"
-        ></p-fileUpload> -->
+          required
+        ></p-fileUpload>
       </div>
       <p-button
         type="submit"

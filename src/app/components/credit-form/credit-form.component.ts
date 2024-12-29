@@ -11,7 +11,9 @@ import { CardModule } from 'primeng/card';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectModule } from 'primeng/select';
 import { FileUploadModule } from 'primeng/fileupload';
-
+import { MessageService } from 'primeng/api';
+import { AuthService } from '../../services/auth.service';
+import { sendCreditForm } from '../../interface/auth';
 @Component({
   selector: 'app-credit-form',
   imports: [
@@ -28,15 +30,24 @@ import { FileUploadModule } from 'primeng/fileupload';
 })
 export class CreditFormComponent {
   private router = inject(Router);
-  // file: File | null = null;
+  private messageService = inject(MessageService);
+  private registerService = inject(AuthService);
+  file: File | null = null;
   monthsList = Array.from({ length: 36 }, (_, i) => ({
     name: `${i + 1} months`,
-    value: i + 1, //
+    value: i + 1,
   }));
 
-  // onFileSelect(event: any) {
-  //   this.creditForm.controls['file'].setValue(event.files);
-  // }
+  onFileSelect(event: any) {
+    const files = event.currentFiles; // Используем правильное свойство
+
+    if (files && files.length > 0) {
+      this.creditForm.controls['file'].setValue(files);
+      console.log(files);// Устанавливаем массив файлов в форму
+    } else {
+      console.warn('No files selected!');
+    }
+  }
 
   logout() {
     sessionStorage.clear();
@@ -46,14 +57,41 @@ export class CreditFormComponent {
   creditForm = new FormGroup({
     amount: new FormControl('', [Validators.required]),
     months: new FormControl(1, [Validators.required]),
-    file: new FormControl(null, [Validators.required]),
+    file: new FormControl([], [Validators.required]),
   });
 
   onSubmit() {
-    console.log(this.creditForm.value);
-  }
+    const id = sessionStorage.getItem('id');
+    const email = sessionStorage.getItem('email');
+     if (!id || !email) {
+       console.error('Missing user data in sessionStorage');
+       return; // Прекращаем выполнение, если данных нет
+     }
+   const postData: sendCreditForm = {
+     id, // id пользователя
+     email, // email пользователя
+     file: this.creditForm.value.file, // файл из формы
+     months: this.creditForm.value.months?.toString() || '', // месяцы в строковом формате
+     amount: parseFloat(this.creditForm.value.amount?.toString() || '0'), // сумма
+   };
 
-  // get months() {
-  //   return this.creditForm.controls['months'];
-  // }
+    this.registerService.sendCreditForm(postData as sendCreditForm).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Yooohoo!',
+          detail: 'Request Sended',
+        });
+      },
+      error: (err) => {
+        console.log(err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Something went wrong',
+        });
+      },
+    });
+  }
 }

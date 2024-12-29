@@ -35,7 +35,9 @@ export class LoginComponent {
     this.authService.getUserDetails(email, password).subscribe({
       next: (response) => {
         if (response.length >= 1) {
+           const id = response[0]?.id;
           sessionStorage.setItem('email', email);
+           sessionStorage.setItem('id', id);
           this.router.navigate(['credit-form']);
         } else {
             this.messageService.add({

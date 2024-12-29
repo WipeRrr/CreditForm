@@ -26,9 +26,17 @@
     },
     {
       "id": "34c4",
-      "fullName": "Tolik",
       "email": "tolik@gmail.com",
-      "password": "123456789q"
+      "file": [
+        {
+          "objectURL": {
+            "changingThisBreaksApplicationSecurity": "blob:http://localhost:4200/e21c19c9-6201-4632-ae31-f73bad6a67b1"
+          }
+        },
+        {}
+      ],
+      "months": "[object Object]",
+      "amount": 123123
     },
     {
       "id": "c0bd",
