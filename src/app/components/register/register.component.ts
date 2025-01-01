@@ -12,7 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { passwordMismatchValidator } from '../../shared/password-mismatch.directive';
 import { AuthService } from '../../services/auth.service';
-import { RegisterPostData } from '../../interface/auth';
+import { RegisterUser } from '../../interface/auth';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -51,19 +51,18 @@ export class RegisterComponent {
   );
 
   onRegister() {
-    const PostData = { ...this.registerForm.value };
-    delete PostData.confirmPassword;
-    const email = PostData.email ?? '';
-    this.registerService.registerUser(PostData as RegisterPostData).subscribe({
-      next: (response) => {
-        console.log(response);
+    const userData = { ...this.registerForm.value };
+    delete userData.confirmPassword;
+    const email = userData.email ?? '';
+    this.registerService.registerUser(userData as RegisterUser).subscribe({
+      next: () => {
         this.messageService.add({
           severity: 'success',
           summary: 'Yooohoo!',
           detail: 'Register successfully',
         });
         sessionStorage.setItem('email', email);
-        this.router.navigate(['credit-form']);
+        this.router.navigate(['login']);
       },
       error: (err) => {
         console.log(err);

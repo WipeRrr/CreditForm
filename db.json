@@ -1,48 +1,42 @@
 {
   "users": [
     {
-      "id": "e4c3",
-      "fullName": "asdasd",
-      "email": "asdasdasd@asdasd",
-      "password": "asdfgh"
+      "id": "f5e6",
+      "fullName": "olg",
+      "email": "olg@gmail.com",
+      "password": "123456o"
     },
     {
-      "id": "e742",
-      "fullName": "Vasia",
-      "email": "dfjkhgjkldjfhgkjdhfjkh@sd;lkfklsfjg",
-      "password": "zaqwsx"
-    },
-    {
-      "id": "113b",
-      "fullName": "Oleg",
-      "email": "oleg@gmail.com",
-      "password": "1234567w"
-    },
-    {
-      "id": "058f",
-      "fullName": "sdfgdfghdfgh",
-      "email": "fuckyou@gmail.com",
-      "password": "123456s"
-    },
-    {
-      "id": "34c4",
+      "id": "c10f",
+      "fullName": "Tolik",
       "email": "tolik@gmail.com",
+      "password": "123456q"
+    },
+    {
+      "id": "28af",
+      "fullName": "qwerty",
+      "email": "qwerty@gmail.com",
+      "password": "qwerty"
+    }
+  ],
+  "credits": [
+    {
+      "id": "28af",
+      "email": "qwerty@gmail.com",
       "file": [
         {
-          "objectURL": {
-            "changingThisBreaksApplicationSecurity": "blob:http://localhost:4200/e21c19c9-6201-4632-ae31-f73bad6a67b1"
-          }
+          "name": "Anatoliy.jpg",
+          "type": "image/jpeg",
+          "size": 35466
         },
-        {}
+        {
+          "name": "Anatoliy_Matsakov_Frontend Dev.pdf",
+          "type": "application/pdf",
+          "size": 315284
+        }
       ],
-      "months": "[object Object]",
-      "amount": 123123
-    },
-    {
-      "id": "c0bd",
-      "fullName": "galina",
-      "email": "galina@gmail.com",
-      "password": "123456q"
+      "months": "5 months",
+      "amount": 3456
     }
   ]
 }

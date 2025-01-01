@@ -1,17 +1,9 @@
-export interface RegisterPostData {
+export interface RegisterUser {
   fullName: string;
   email: string;
   password: string;
 }
 
-export interface User extends RegisterPostData {
+export interface User extends RegisterUser {
   id: string;
-}
-
-export interface sendCreditForm {
-  id: string;
-  email: string;
-  file: File[] | null | undefined;
-  months: string;
-  amount: number;
 }

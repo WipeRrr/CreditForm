@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -12,8 +12,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectModule } from 'primeng/select';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MessageService } from 'primeng/api';
-import { AuthService } from '../../services/auth.service';
-import { sendCreditForm } from '../../interface/auth';
+import { CreditForm } from '../../interface/credit';
+import { CreditService } from '../../services/credit.service';
 @Component({
   selector: 'app-credit-form',
   imports: [
@@ -28,24 +28,37 @@ import { sendCreditForm } from '../../interface/auth';
   templateUrl: './credit-form.component.html',
   styleUrl: './credit-form.component.scss',
 })
-export class CreditFormComponent {
+export class CreditFormComponent implements OnInit {
   private router = inject(Router);
   private messageService = inject(MessageService);
-  private registerService = inject(AuthService);
+  private creditService = inject(CreditService);
   file: File | null = null;
-  monthsList = Array.from({ length: 36 }, (_, i) => ({
-    name: `${i + 1} months`,
-    value: i + 1,
-  }));
+  monthsList: object[] | undefined;
+
+  ngOnInit() {
+    this.monthsList = Array.from({ length: 36 }, (_, i) => ({
+      name: `${i + 1} months`,
+      value: `${i + 1}`,
+    }));
+  }
 
   onFileSelect(event: any) {
-    const files = event.currentFiles; // Используем правильное свойство
+    const files = event.currentFiles;
 
-    if (files && files.length > 0) {
-      this.creditForm.controls['file'].setValue(files);
-      console.log(files);// Устанавливаем массив файлов в форму
+    if (files.length > 0) {
+      const processedFiles = files.map((file: File) => ({
+        name: file.name,
+        type: file.type,
+        size: file.size,
+      }));
+
+      this.creditForm.controls['file'].setValue(processedFiles);
     } else {
-      console.warn('No files selected!');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Oops!',
+        detail: 'No file selected',
+      });
     }
   }
 
@@ -55,33 +68,39 @@ export class CreditFormComponent {
   }
 
   creditForm = new FormGroup({
-    amount: new FormControl('', [Validators.required]),
-    months: new FormControl(1, [Validators.required]),
-    file: new FormControl([], [Validators.required]),
+    amount: new FormControl<number | null>(0, [Validators.required]),
+    months: new FormControl<{ name: string; value: number } | null>(null, [
+      Validators.required,
+    ]),
+    file: new FormControl<File[]>([], [Validators.required]),
   });
 
   onSubmit() {
     const id = sessionStorage.getItem('id');
     const email = sessionStorage.getItem('email');
-     if (!id || !email) {
-       console.error('Missing user data in sessionStorage');
-       return; // Прекращаем выполнение, если данных нет
-     }
-   const postData: sendCreditForm = {
-     id, // id пользователя
-     email, // email пользователя
-     file: this.creditForm.value.file, // файл из формы
-     months: this.creditForm.value.months?.toString() || '', // месяцы в строковом формате
-     amount: parseFloat(this.creditForm.value.amount?.toString() || '0'), // сумма
-   };
+    const { months, amount, file } = this.creditForm.value;
 
-    this.registerService.sendCreditForm(postData as sendCreditForm).subscribe({
-      next: (response) => {
-        console.log(response);
+    if (!id || !email) {
+      console.error('Missing user data in sessionStorage');
+      return;
+    }
+
+    const selectedMonthName = months ? months.name : '';
+
+    const userData: CreditForm = {
+      id: id!,
+      email: email!,
+      file: file || [],
+      months: selectedMonthName || '',
+      amount: amount || 0,
+    };
+
+    this.creditService.sendCreditForm(userData as CreditForm).subscribe({
+      next: () => {
         this.messageService.add({
           severity: 'success',
           summary: 'Yooohoo!',
-          detail: 'Request Sended',
+          detail: `Request for a credit of ${amount}$ for ${selectedMonthName} has been sent.`,
         });
       },
       error: (err) => {

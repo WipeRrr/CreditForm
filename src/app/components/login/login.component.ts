@@ -32,19 +32,19 @@ export class LoginComponent {
   private messageService = inject(MessageService);
   onLogin() {
     const { email, password } = this.login;
-    this.authService.getUserDetails(email, password).subscribe({
+    this.authService.getUserDetails(email).subscribe({
       next: (response) => {
-        if (response.length >= 1) {
-           const id = response[0]?.id;
+        if (response.length > 0 && password === response[0].password) {
+          const id = response[0]?.id;
           sessionStorage.setItem('email', email);
-           sessionStorage.setItem('id', id);
+          sessionStorage.setItem('id', id);
           this.router.navigate(['credit-form']);
         } else {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: 'Wrong email or password',
-            });
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Wrong email or password',
+          });
         }
       },
       error: () => {
