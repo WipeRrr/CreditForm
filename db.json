@@ -1,0 +1,42 @@
+{
+  "users": [
+    {
+      "id": "f5e6",
+      "fullName": "olg",
+      "email": "olg@gmail.com",
+      "password": "123456o"
+    },
+    {
+      "id": "c10f",
+      "fullName": "Tolik",
+      "email": "tolik@gmail.com",
+      "password": "123456q"
+    },
+    {
+      "id": "28af",
+      "fullName": "qwerty",
+      "email": "qwerty@gmail.com",
+      "password": "qwerty"
+    }
+  ],
+  "credits": [
+    {
+      "id": "28af",
+      "email": "qwerty@gmail.com",
+      "file": [
+        {
+          "name": "Anatoliy.jpg",
+          "type": "image/jpeg",
+          "size": 35466
+        },
+        {
+          "name": "Anatoliy_Matsakov_Frontend Dev.pdf",
+          "type": "application/pdf",
+          "size": 315284
+        }
+      ],
+      "months": "5 months",
+      "amount": 3456
+    }
+  ]
+}
