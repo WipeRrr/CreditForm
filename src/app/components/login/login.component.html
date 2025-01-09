@@ -1,0 +1,77 @@
+<div class="flex justify-content-center align-items-center min-h-screen">
+  <p-card header="Login" [style]="{ width: '450px' }">
+    <form #loginForm="ngForm" (ngSubmit)="onLogin()">
+      <div class="field">
+        <label for="email">Email</label>
+        <input
+          type="text"
+          pInputText
+          name="email"
+          id="email"
+          [(ngModel)]="login.email"
+          class="w-full"
+          #email="ngModel"
+          required
+          pattern="[a-z0-9\._%\+\-]+@[a-z0-9\.\-]+\.[a-z]{2,}$"
+          autocomplete="off"
+        />
+        @if(email.invalid && (email.dirty || email.touched)){
+        <small class="block p-error">
+          @if(email.hasError('required')) {
+          <span class="red_invalid">Email is required</span>
+          } @else if(email.hasError('pattern')) {
+          <span class="red_invalid">Email is invalid</span>
+          }
+        </small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <p-password
+          name="password"
+          [feedback]="false"
+          autocomplete="off"
+          id="password"
+          inputId="password"
+          #password="ngModel"
+          inputStyleClass="w-full"
+          [(ngModel)]="login.password"
+          [toggleMask]="true"
+          class="w-full"
+          styleClass="w-full"
+          required
+          pattern="^(?=.*[A-Za-z]).{6,}$"
+        />
+        @if(password.invalid && (password.dirty || password.touched)) {
+        <small class="block p-error">
+          @if(password.hasError('required')) {
+          <span class="red_invalid">Password is required</span>
+          } @else if(password.hasError('pattern')) {
+          <span class="red_invalid"
+            >Password must contain at least 6 characters and at least 1
+            letter.</span
+          >
+          }
+        </small>
+
+        }
+      </div>
+
+      <p-button
+        label="SIGN IN"
+        styleClass="w-full"
+        [raised]="true"
+        [disabled]="loginForm.invalid"
+        type="submit"
+      ></p-button>
+      <div class="mt-2">
+        Not a member?<p-button
+          routerLink="/register"
+          label="Register"
+          [link]="true"
+        ></p-button>
+      </div>
+    </form>
+  </p-card>
+</div>
