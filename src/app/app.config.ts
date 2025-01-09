@@ -5,6 +5,8 @@ import { providePrimeNG } from 'primeng/config';
 import Lara from '@primeng/themes/lara';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
+// import { provideStore } from '@ngrx/store';
+// import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,5 +22,7 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     provideHttpClient(),
+    // provideStore({ user: userReducer }),
+    // provideEffects([UserEffects]),
   ],
 };
